@@ -13,12 +13,13 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Meter
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -41,7 +42,7 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs" sx={{ border:1, borderColor: 'primary.main'}}>
+      <Container component="main" maxWidth="xs" sx={{ color: 'primary.main', border: {xs: 'none', sm: 'none', md: 1, lg: 1}}} >
         <CssBaseline />
         <Box
           sx={{
@@ -55,7 +56,7 @@ export default function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Administrator
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -78,10 +79,6 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
@@ -98,7 +95,7 @@ export default function SignIn() {
               </Grid>
               <Grid item>
                 <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"Meter Entries"}
                 </Link>
               </Grid>
             </Grid>
