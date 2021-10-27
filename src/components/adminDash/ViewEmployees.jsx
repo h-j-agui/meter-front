@@ -11,20 +11,25 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
+import FormDialog from "./elements/FormEdit";
 
 export default function ViewEmployees() {
   const [employees, setEmployees] = useState([]);
 
-  useEffect(() => {
+  const getEmployees = () => {
     axios
       .get("http://localhost:8080/getEmployees")
       .then((data) => {
         setEmployees(data.data);
       })
       .then(() => {
-        console.log("employees state", employees);
+        // console.log("employees state", employees);
       })
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getEmployees();
   }, []);
 
   const handleDelete = (id) => {
@@ -55,7 +60,7 @@ export default function ViewEmployees() {
         </Typography>
 
         {employees.map((employee) => {
-          console.log(employee);
+          // console.log(employee);
           return (
             <Card key={employee.id} elevation={2}>
               <Box>
@@ -74,6 +79,13 @@ export default function ViewEmployees() {
                   >
                     Delete
                   </Button>
+                  <FormDialog
+                    employee={employee}
+                    employees={employees}
+                    // setEmployees={(val) => {
+                    //   setEmployees(val);
+                    // }}
+                  />
                 </CardActions>
               </Box>
             </Card>
