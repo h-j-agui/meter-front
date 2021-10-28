@@ -39,7 +39,7 @@ export default function FormDialog(props) {
       })
       .then((result) => {
         console.log(result);
-
+        props.getEmployees();
         handleClose();
       })
       .catch((err) => {

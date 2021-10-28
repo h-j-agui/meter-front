@@ -18,7 +18,7 @@ const Location = () => {
     e.preventDefault();
     console.log("starting axios post...");
     axios
-      .post("http://localhost:8080/admin/addLocation", { location })
+      .post("http://localhost:8080/admin/addMeter", { location })
       .then((res) => {
         console.log("success", res);
       })

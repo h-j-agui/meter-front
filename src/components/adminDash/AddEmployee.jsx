@@ -94,6 +94,7 @@ const AddEmployee = () => {
           variant="text"
           size="medium"
           sx={{ margin: "10px auto" }}
+          href="/viewEmployees"
         >
           View Employees
         </Button>

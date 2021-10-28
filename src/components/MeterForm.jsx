@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import {
   Container,
   Typography,
@@ -16,6 +17,7 @@ import {
 
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
+import { useState, useEffect } from "react";
 
 const useStyles = makeStyles({
   root: { marginTop: "20px" },
@@ -28,16 +30,62 @@ const useStyles = makeStyles({
 
 const MeterForm = () => {
   const classes = useStyles();
-  const [age, setAge] = React.useState("");
+  const [number, setNumber] = useState("");
+  const [place, setPlace] = useState("");
+  const [note, setNote] = useState("");
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/admin/getMeters")
+      .then((data) => {
+        console.log(data.data);
+        setMeterList(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const [meterList, setMeterList] = useState([]);
+
+  const cleanStates = () => {
+    setNumber("");
+    setPlace("");
+    setNote("");
   };
 
-  const handleChangeNum = (prop) => (event) => {
-    // setValues({ ...values, [prop]: event.target.value });
+  const handlePlaceChange = (event) => {
+    console.log(event.target.value);
+    setPlace(event.target.value);
+  };
+
+  const handleNumChange = (e) => {
+    setNumber(e.target.value);
     console.log("kWh");
   };
+  const handleNotesChange = (e) => {
+    setNote(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("starting axios post...");
+    axios
+      .post("http://localhost:8080/form", {
+        place: place,
+        reading: number,
+        notes: note,
+      })
+      .then((res) => {
+        console.log("success", res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    cleanStates();
+  };
+
   return (
     <Container component="main">
       <Box className={classes.root}>
@@ -52,14 +100,17 @@ const MeterForm = () => {
             <Select
               labelId="outlined-adornment-password"
               id="outlined-adornment-password"
-              value={age}
-              label="Age"
-              onChange={handleChange}
+              value={place}
+              label="Location"
+              onChange={handlePlaceChange}
             >
-              <MenuItem value={1}>Sabin</MenuItem>
-              <MenuItem value={2}>Sarmiento</MenuItem>
-              <MenuItem value={3}>Hirigoyen</MenuItem>
-              <MenuItem value={4}>Las Heras</MenuItem>
+              {meterList.map((e) => {
+                return (
+                  <MenuItem key={e.id} value={e.id}>
+                    {e.location}
+                  </MenuItem>
+                );
+              })}
             </Select>
           </FormControl>
         </Box>
@@ -70,6 +121,8 @@ const MeterForm = () => {
               variant="outlined"
               label="Number"
               type="number"
+              value={number}
+              onChange={handleNumChange}
             />
           </FormControl>
         </Box>
@@ -80,12 +133,19 @@ const MeterForm = () => {
               variant="outlined"
               rows={4}
               multiline
+              value={note}
               style={{ width: "100%" }}
+              onChange={handleNotesChange}
             />
           </FormControl>
         </Box>
         <Box className={classes.submit}>
-          <Button type="submit" variant="contained" style={{ width: "250px" }}>
+          <Button
+            type="submit"
+            variant="contained"
+            style={{ width: "250px" }}
+            onClick={handleSubmit}
+          >
             Add
           </Button>
         </Box>
