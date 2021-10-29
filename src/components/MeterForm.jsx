@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 const MeterForm = () => {
   const classes = useStyles();
   const [number, setNumber] = useState("");
-  const [place, setPlace] = useState("");
+  const [meter, setMeter] = useState("");
   const [note, setNote] = useState("");
 
   useEffect(() => {
@@ -50,13 +50,13 @@ const MeterForm = () => {
 
   const cleanStates = () => {
     setNumber("");
-    setPlace("");
+    setMeter("");
     setNote("");
   };
 
-  const handlePlaceChange = (event) => {
+  const handleMeterChange = (event) => {
     console.log(event.target.value);
-    setPlace(event.target.value);
+    setMeter(event.target.value);
   };
 
   const handleNumChange = (e) => {
@@ -71,8 +71,8 @@ const MeterForm = () => {
     e.preventDefault();
     console.log("starting axios post...");
     axios
-      .post("http://localhost:8080/form", {
-        place: place,
+      .post("http://localhost:8080/editMeterData", {
+        meter_id: meter,
         reading: number,
         notes: note,
       })
@@ -100,9 +100,9 @@ const MeterForm = () => {
             <Select
               labelId="outlined-adornment-password"
               id="outlined-adornment-password"
-              value={place}
+              value={meter}
               label="Location"
-              onChange={handlePlaceChange}
+              onChange={handleMeterChange}
             >
               {meterList.map((e) => {
                 return (
@@ -149,6 +149,15 @@ const MeterForm = () => {
             Add
           </Button>
         </Box>
+        <Button
+          variant="text"
+          size="medium"
+          sx={{ width: "25%", margin: "10PX auto" }}
+          // onClick={handleLogout}
+          href="/"
+        >
+          Logout
+        </Button>
       </Box>
     </Container>
   );

@@ -8,10 +8,13 @@ import {
   Box,
   Button,
   CardActions,
+  IconButton,
 } from "@mui/material";
+import Icon from "@mui/material/Icon";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import FormDialog from "./elements/FormEdit";
+import { visuallyHidden } from "@mui/utils";
 
 export default function ViewEmployees() {
   const [employees, setEmployees] = useState([]);
@@ -58,6 +61,9 @@ export default function ViewEmployees() {
         >
           Your Employees
         </Typography>
+        <IconButton sx={{ visuallyHidden }} href="/addEmployee">
+          <Icon color="secondary">add_circle</Icon>
+        </IconButton>
 
         {employees.map((employee) => {
           // console.log(employee);
