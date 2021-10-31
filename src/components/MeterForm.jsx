@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import Moment from "moment";
 import {
   Container,
   Typography,
@@ -30,20 +31,34 @@ const useStyles = makeStyles({
 
 const MeterForm = () => {
   const classes = useStyles();
-  const [number, setNumber] = useState("");
+
   const [meter, setMeter] = useState("");
+  const [number, setNumber] = useState("");
   const [note, setNote] = useState("");
 
+  const [lastReadings, setLastReadings] = useState([]);
+  const [displayReading, setDisplayReading] = useState("");
+
   useEffect(() => {
+    //Fetching meters for selector
     axios
       .get("http://localhost:8080/admin/getMeters")
       .then((data) => {
-        console.log(data.data);
+        console.log(data);
         setMeterList(data.data);
       })
       .catch((err) => {
         console.log(err);
       });
+
+    //Fetching last record of each meter
+    axios
+      .get("http://localhost:8080/getLastReadings")
+      .then((data) => {
+        console.log(data.data.rows);
+        setLastReadings(data.data.rows);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   const [meterList, setMeterList] = useState([]);
@@ -55,7 +70,16 @@ const MeterForm = () => {
   };
 
   const handleMeterChange = (event) => {
-    console.log(event.target.value);
+    console.log("lalala", event.target.value);
+
+    lastReadings.forEach((element) => {
+      if (element.meter_id == event.target.value) {
+        setDisplayReading(element);
+      }
+
+      console.log(element);
+    });
+
     setMeter(event.target.value);
   };
 
@@ -114,6 +138,22 @@ const MeterForm = () => {
             </Select>
           </FormControl>
         </Box>
+
+        {displayReading ? (
+          <Box>
+            <Typography
+              sx={{ fontStyle: "italic" }}
+            >{`Latest entry for this location is ${displayReading.reading} kWh on`}</Typography>
+
+            {/* <Box>{`on date ${displayReading.createdAt}`}</Box> */}
+            <Typography sx={{ fontStyle: "italic" }}>
+              {Moment(displayReading.createdAt).format("LLL")}
+            </Typography>
+          </Box>
+        ) : (
+          <Box></Box>
+        )}
+
         <Box className={classes.input}>
           <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
             <TextField

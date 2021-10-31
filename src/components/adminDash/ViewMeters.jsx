@@ -9,14 +9,22 @@ const columns = [
     field: "meter_id",
     headerName: "Meter Number",
     width: 150,
-    editable: true,
+    editable: false,
+  },
+  {
+    field: "meter",
+    headerName: "Location",
+    width: 150,
+    editable: false,
+    valueGetter: (params) => {
+      return params.row.meter.location;
+    },
   },
   {
     field: "reading",
     headerName: "kWh",
     type: "number",
     width: 110,
-    editable: true,
   },
   {
     field: "notes",
@@ -24,17 +32,13 @@ const columns = [
     description: "This column has a value getter and is not sortable.",
     sortable: false,
     width: 160,
+    editable: true,
   },
   {
     field: "username",
     headerName: "User Name",
     width: 150,
-    editable: true,
   },
-];
-
-const rows = [
-  { id: 1, location: "Jon", reading: 35, notes: "hello", username: "Snow" },
 ];
 
 const ViewMeters = () => {
@@ -44,7 +48,7 @@ const ViewMeters = () => {
     axios
       .get("http://localhost:8080/getMeterData")
       .then((data) => {
-        console.log(data);
+        console.log(data.data);
         setReadings(data.data);
       })
 
