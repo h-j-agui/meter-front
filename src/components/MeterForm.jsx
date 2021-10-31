@@ -59,7 +59,7 @@ const MeterForm = () => {
         setLastReadings(data.data.rows);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [displayReading]);
 
   const [meterList, setMeterList] = useState([]);
 
@@ -67,6 +67,8 @@ const MeterForm = () => {
     setNumber("");
     setMeter("");
     setNote("");
+    setDisplayReading("");
+    setLastReadings([]);
   };
 
   const handleMeterChange = (event) => {
@@ -94,20 +96,25 @@ const MeterForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("starting axios post...");
-    axios
-      .post("http://localhost:8080/editMeterData", {
-        meter_id: meter,
-        reading: number,
-        notes: note,
-      })
-      .then((res) => {
-        console.log("success", res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
 
-    cleanStates();
+    if (number < displayReading.reading) {
+      alert("Error, check the meter display number again");
+    } else {
+      axios
+        .post("http://localhost:8080/editMeterData", {
+          meter_id: meter,
+          reading: number,
+          notes: note,
+        })
+        .then((res) => {
+          console.log("success", res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      cleanStates();
+    }
   };
 
   return (
