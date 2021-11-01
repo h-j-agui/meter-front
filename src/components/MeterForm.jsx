@@ -44,7 +44,6 @@ const MeterForm = () => {
     axios
       .get("http://localhost:8080/admin/getMeters")
       .then((data) => {
-        console.log(data);
         setMeterList(data.data);
       })
       .catch((err) => {
@@ -72,14 +71,10 @@ const MeterForm = () => {
   };
 
   const handleMeterChange = (event) => {
-    console.log("lalala", event.target.value);
-
     lastReadings.forEach((element) => {
       if (element.meter_id == event.target.value) {
         setDisplayReading(element);
       }
-
-      console.log(element);
     });
 
     setMeter(event.target.value);
@@ -108,11 +103,11 @@ const MeterForm = () => {
         })
         .then((res) => {
           console.log("success", res);
-          cleanStates();
         })
         .catch((err) => {
           console.log(err);
         });
+      cleanStates();
     }
   };
 
