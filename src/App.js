@@ -10,7 +10,7 @@ import Location from "./components/adminDash/AddLocation";
 import Administrator from "./components/adminDash/AddAdministrator";
 import ViewEmployees from "./components/adminDash/ViewEmployees";
 import ViewMeters from "./components/adminDash/ViewMeters";
-
+import Consumptions from "./components/adminDash/Consumptions";
 function App() {
   return (
     <div className="App">
@@ -28,6 +28,7 @@ function App() {
       <Route exact path="/viewMeters" component={ViewMeters} />
       <Route exact path="/addLocation" component={Location} />
       <Route exact path="/addAdministrator" component={Administrator} />
+      <Route exact path="/consumptions" component={Consumptions} />
     </div>
   );
 }

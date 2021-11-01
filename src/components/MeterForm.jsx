@@ -97,8 +97,8 @@ const MeterForm = () => {
     e.preventDefault();
     console.log("starting axios post...");
 
-    if (number < displayReading.reading) {
-      alert("Error, check the meter display number again");
+    if (number <= displayReading.reading) {
+      alert("Error, check the meter number again");
     } else {
       axios
         .post("http://localhost:8080/editMeterData", {
@@ -108,12 +108,11 @@ const MeterForm = () => {
         })
         .then((res) => {
           console.log("success", res);
+          cleanStates();
         })
         .catch((err) => {
           console.log(err);
         });
-
-      cleanStates();
     }
   };
 
