@@ -32,7 +32,7 @@ const AddEmployee = () => {
     e.preventDefault();
     console.log("starting axios post...");
     axios
-      .post("http://localhost:8080/admin/addUser", {
+      .post("/admin/addUser", {
         username: cleanName(name),
         password: pin,
       })

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import Moment from "moment";
 import {
@@ -7,6 +7,7 @@ import {
   InputLabel,
   FormControl,
   TextField,
+  bottomNavigationClasses,
 } from "@mui/material";
 import {
   Select,
@@ -19,6 +20,7 @@ import {
 import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import { useState, useEffect } from "react";
+import { LoginContext } from "../utils/Context";
 
 const useStyles = makeStyles({
   root: { marginTop: "20px" },
@@ -30,6 +32,8 @@ const useStyles = makeStyles({
 });
 
 const MeterForm = () => {
+  const { loggedIn, setLoggedIn } = useContext(LoginContext);
+
   const classes = useStyles();
 
   const [meter, setMeter] = useState("");
@@ -40,6 +44,17 @@ const MeterForm = () => {
   const [displayReading, setDisplayReading] = useState("");
 
   useEffect(() => {
+    axios
+      .get("http://localhost:8080/checkAuth", {
+        withCredentials: true,
+        // headers: { "Access-Control-Allow-Origin": "*" },
+      })
+      .then((response) => {
+        // console.log(response);
+        // setLoggedIn(response);
+      })
+      .catch((err) => console.log(err));
+
     //Fetching meters for selector
     axios
       .get("http://localhost:8080/admin/getMeters")
@@ -54,11 +69,20 @@ const MeterForm = () => {
     axios
       .get("http://localhost:8080/getLastReadings")
       .then((data) => {
-        console.log(data.data.rows);
+        // console.log(data.data.rows);
         setLastReadings(data.data.rows);
       })
       .catch((err) => console.log(err));
   }, [displayReading]);
+
+  const handleCheck = () => {
+    axios
+      .get("/checkAuth")
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const [meterList, setMeterList] = useState([]);
 
@@ -111,11 +135,19 @@ const MeterForm = () => {
     }
   };
 
+  const handleLogout = () => {
+    axios.post("http://localhost:8080/logout").then((res) => {
+      console.log(res);
+      // setLoggedIn(false);
+    });
+  };
+
   return (
     <Container component="main">
       <Box className={classes.root}>
         <Box className={classes.title}>
           <Typography component="h1">Meter Form</Typography>
+          <Typography component="h1">{loggedIn}</Typography>
         </Box>
         <Box className={classes.input}>
           <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
@@ -194,11 +226,12 @@ const MeterForm = () => {
           variant="text"
           size="medium"
           sx={{ width: "25%", margin: "10PX auto" }}
-          // onClick={handleLogout}
-          href="/"
+          onClick={handleLogout}
+          // href="/"
         >
           Logout
         </Button>
+        <Button onClick={handleCheck}>checkauth</Button>
       </Box>
     </Container>
   );

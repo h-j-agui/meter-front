@@ -1,4 +1,5 @@
-import * as React from "react";
+import React, { useContext, useState } from "react";
+import { useHistory, Redirect } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,6 +11,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
+
+import { LoginContext } from "../utils/Context";
 
 function Copyright(props) {
   return (
@@ -32,14 +36,50 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const history = useHistory();
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+
+  //   const data = new FormData(event.currentTarget);
+  //   // eslint-disable-next-line no-console
+  //   // axios.post("http://localhost:8080/")
+  //   //   email: email,
+  //   //   password: password
+  // };
+  const [pass, setPass] = useState("");
+
+  const { loggedIn, setLoggedIn } = useContext(LoginContext);
+
+  const handlePinChange = (e) => {
+    setPass(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("/login", {
+        username: "any",
+        password: pass,
+      })
+      .then((user) => {
+        console.log(user);
+        setLoggedIn(user.data.username);
+      })
+      .then(() => {
+        if (loggedIn) {
+          history.push("/meter");
+        } else Redirect("/");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleCheck = () => {
+    axios
+      .get("/checkAuth")
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -64,6 +104,7 @@ export default function SignIn() {
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
+          <h1>{loggedIn}</h1>
           <Typography component="h1" variant="h5">
             Pin
           </Typography>
@@ -81,6 +122,7 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
+              onChange={handlePinChange}
               autoComplete="current-password"
               inputProps={{ maxLength: 4 }}
             />
@@ -89,15 +131,17 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              href="/meter"
+              onClick={handleSubmit}
             >
               Enter
             </Button>
+
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
                   Home
                 </Link>
+                <Button onClick={handleCheck}>checkauth</Button>
               </Grid>
               <Grid item>
                 <Link href="/admin" variant="body2">

@@ -46,7 +46,7 @@ const ViewMeters = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/getMeterData")
+      .get("/getMeterData")
       .then((data) => {
         console.log(data.data);
         setReadings(data.data);
