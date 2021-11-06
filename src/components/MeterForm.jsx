@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 
 const MeterForm = () => {
   const { loggedIn, setLoggedIn } = useContext(LoginContext);
-
+  const [isPending, setIsPending] = useState(true);
   console.log("meter", loggedIn);
   const classes = useStyles();
   const history = useHistory();
@@ -46,21 +46,13 @@ const MeterForm = () => {
   const [meterList, setMeterList] = useState([]);
 
   useEffect(() => {
-    // axios
-    //   .get("http://localhost:8080/checkAuth", {
-    //     withCredentials: true,
-    //   })
-    //   .then((response) => {
-    //     // console.log(response);
-    //     // setLoggedIn(response);
-    //   })
-    //   .catch((err) => console.log(err));
-
     //Fetching meters for selector
+
     axios
       .get("http://localhost:8080/admin/getMeters")
       .then((data) => {
         setMeterList(data.data);
+        setIsPending(false);
       })
       .catch((err) => {
         console.log(err);
@@ -122,7 +114,7 @@ const MeterForm = () => {
           meter_id: meter,
           reading: number,
           notes: note,
-          user_id: loggedIn.id,
+          employee_id: loggedIn.id,
         })
         .then((res) => {
           console.log("success", res);
@@ -145,7 +137,9 @@ const MeterForm = () => {
       });
   };
 
-  return (
+  return isPending == true ? (
+    <Box sx={{ mt: 10, fontSize: 22 }}>Loading...</Box>
+  ) : (
     <Container component="main">
       <Box className={classes.root}>
         <Box className={classes.title}>

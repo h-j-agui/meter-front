@@ -38,6 +38,9 @@ const columns = [
     field: "username",
     headerName: "User Name",
     width: 150,
+    valueGetter: (params) => {
+      return params.row.employee.username;
+    },
   },
 ];
 
@@ -48,7 +51,7 @@ const ViewMeters = () => {
     axios
       .get("/getMeterData")
       .then((data) => {
-        console.log(data.data);
+        console.log("this is here", data.data);
         setReadings(data.data);
       })
 

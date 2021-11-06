@@ -96,7 +96,7 @@ export default function SignIn() {
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <h1>Titulo del Pin</h1>
+
           <Typography component="h1" variant="h5">
             Pin
           </Typography>

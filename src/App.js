@@ -28,7 +28,6 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log("12", loggedIn);
   return (
     <LoginContext.Provider value={{ loggedIn, setLoggedIn }}>
       <div className="App">
