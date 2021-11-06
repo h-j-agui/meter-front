@@ -15,21 +15,20 @@ import { LoginContext } from "./utils/Context";
 import axios from "axios";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState("Hello from above main component");
-
+  const [loggedIn, setLoggedIn] = useState(null);
   useEffect(() => {
+    // console.log("use effect ran");
     axios
       .get("/checkAuth")
       .then((data) => {
         // console.log(data);
-
-        data.data.message == "Not Authorized"
-          ? setLoggedIn(data.data.message)
-          : setLoggedIn(data.data.username);
+        setLoggedIn(data.data);
       })
+      // .then(() => console.log("2", loggedIn))
       .catch((err) => console.log(err));
-  });
+  }, []);
 
+  console.log("12", loggedIn);
   return (
     <LoginContext.Provider value={{ loggedIn, setLoggedIn }}>
       <div className="App">
@@ -37,7 +36,7 @@ function App() {
         <Route exact path="/" component={Pin}>
           {/* {loggedIn ? <Redirect to="/meter" /> : <Route exact path="/" />} */}
         </Route>
-        <Route exact path="/meter" component={MeterForm} />
+        {loggedIn && <Route exact path="/meter" component={MeterForm} />}
         {/* Admin can access the admin Dashboard and from there add employees, locations and add another administrator. 
       they can also view the meter entries entered */}
         <Route exact path="/admin" component={Login} />

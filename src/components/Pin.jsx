@@ -36,19 +36,10 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const history = useHistory();
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-
-  //   const data = new FormData(event.currentTarget);
-  //   // eslint-disable-next-line no-console
-  //   // axios.post("http://localhost:8080/")
-  //   //   email: email,
-  //   //   password: password
-  // };
-  const [pass, setPass] = useState("");
-
   const { loggedIn, setLoggedIn } = useContext(LoginContext);
+  const history = useHistory();
+
+  const [pass, setPass] = useState("");
 
   const handlePinChange = (e) => {
     setPass(e.target.value);
@@ -62,13 +53,14 @@ export default function SignIn() {
         password: pass,
       })
       .then((user) => {
-        console.log(user);
-        setLoggedIn(user.data.username);
+        if (user) {
+          setLoggedIn(user.data);
+        } else {
+          Redirect("/");
+        }
       })
       .then(() => {
-        if (loggedIn) {
-          history.push("/meter");
-        } else Redirect("/");
+        history.push("/meter");
       })
       .catch((err) => console.log(err));
   };
@@ -104,7 +96,7 @@ export default function SignIn() {
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <h1>{loggedIn}</h1>
+          <h1>Titulo del Pin</h1>
           <Typography component="h1" variant="h5">
             Pin
           </Typography>

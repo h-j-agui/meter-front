@@ -1,4 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { LoginContext } from "../utils/Context";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Moment from "moment";
 import {
@@ -8,19 +10,15 @@ import {
   FormControl,
   TextField,
   bottomNavigationClasses,
-} from "@mui/material";
-import {
   Select,
   MenuItem,
   InputAdornment,
   OutlinedInput,
   Button,
+  Box,
 } from "@mui/material";
 
 import { makeStyles } from "@mui/styles";
-import Box from "@mui/material/Box";
-import { useState, useEffect } from "react";
-import { LoginContext } from "../utils/Context";
 
 const useStyles = makeStyles({
   root: { marginTop: "20px" },
@@ -34,26 +32,29 @@ const useStyles = makeStyles({
 const MeterForm = () => {
   const { loggedIn, setLoggedIn } = useContext(LoginContext);
 
+  console.log("meter", loggedIn);
   const classes = useStyles();
+  const history = useHistory();
 
+  //Storing form inputs
   const [meter, setMeter] = useState("");
   const [number, setNumber] = useState("");
   const [note, setNote] = useState("");
 
   const [lastReadings, setLastReadings] = useState([]);
   const [displayReading, setDisplayReading] = useState("");
+  const [meterList, setMeterList] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/checkAuth", {
-        withCredentials: true,
-        // headers: { "Access-Control-Allow-Origin": "*" },
-      })
-      .then((response) => {
-        // console.log(response);
-        // setLoggedIn(response);
-      })
-      .catch((err) => console.log(err));
+    // axios
+    //   .get("http://localhost:8080/checkAuth", {
+    //     withCredentials: true,
+    //   })
+    //   .then((response) => {
+    //     // console.log(response);
+    //     // setLoggedIn(response);
+    //   })
+    //   .catch((err) => console.log(err));
 
     //Fetching meters for selector
     axios
@@ -69,7 +70,6 @@ const MeterForm = () => {
     axios
       .get("http://localhost:8080/getLastReadings")
       .then((data) => {
-        // console.log(data.data.rows);
         setLastReadings(data.data.rows);
       })
       .catch((err) => console.log(err));
@@ -83,8 +83,6 @@ const MeterForm = () => {
       })
       .catch((err) => console.log(err));
   };
-
-  const [meterList, setMeterList] = useState([]);
 
   const cleanStates = () => {
     setNumber("");
@@ -124,6 +122,7 @@ const MeterForm = () => {
           meter_id: meter,
           reading: number,
           notes: note,
+          user_id: loggedIn.id,
         })
         .then((res) => {
           console.log("success", res);
@@ -135,11 +134,15 @@ const MeterForm = () => {
     }
   };
 
-  const handleLogout = () => {
-    axios.post("http://localhost:8080/logout").then((res) => {
-      console.log(res);
-      // setLoggedIn(false);
-    });
+  const handleLogout = (req, res, next) => {
+    axios
+      .get("http://localhost:8080/logout", {
+        withCredentials: true,
+      })
+      .then(() => {
+        setLoggedIn("");
+        history.push("/");
+      });
   };
 
   return (
@@ -147,7 +150,7 @@ const MeterForm = () => {
       <Box className={classes.root}>
         <Box className={classes.title}>
           <Typography component="h1">Meter Form</Typography>
-          <Typography component="h1">{loggedIn}</Typography>
+          <Typography component="h1">{loggedIn.username}</Typography>
         </Box>
         <Box className={classes.input}>
           <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
