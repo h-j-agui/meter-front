@@ -224,7 +224,6 @@ const MeterForm = () => {
           size="medium"
           sx={{ width: "25%", margin: "10PX auto" }}
           onClick={handleLogout}
-          // href="/"
         >
           Logout
         </Button>

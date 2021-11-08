@@ -1,4 +1,7 @@
-import * as React from "react";
+import React, { useContext, useState } from "react";
+import axios from "axios";
+import { useHistory, Redirect } from "react-router-dom";
+import { LoginContext } from "../utils/Context";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -32,14 +35,39 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { loggedIn, setLoggedIn } = useContext(LoginContext);
+  const history = useHistory();
+
+  const handleUserChange = (e) => {
+    setUsername(e.target.value);
+  };
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("/adminLogin", {
+        username: username,
+        password: password,
+      })
+      .then((user) => {
+        console.log(user);
+        if (!user) {
+          setLoggedIn(null);
+          Redirect("/admin");
+        } else {
+          setLoggedIn(user.data);
+          // Redirect("/admin");
+        }
+      })
+      .then(() => {
+        history.push("/admin/adminDash");
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -82,6 +110,7 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={handleUserChange}
             />
             <TextField
               margin="normal"
@@ -92,12 +121,14 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handlePasswordChange}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={handleSubmit}
             >
               Sign In
             </Button>

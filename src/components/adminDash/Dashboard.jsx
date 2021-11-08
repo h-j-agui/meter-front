@@ -1,14 +1,27 @@
-import * as React from "react";
+import React, { useContext, useState } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { LoginContext } from "../../utils/Context";
 // import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 
-const handleLogout = () => {
-  alert("logout");
-};
-
 export default function Dashboard() {
-  return (
+  const { loggedIn, setLoggedIn } = useContext(LoginContext);
+  const history = useHistory();
+
+  console.log("loggedin inside admindash is", loggedIn);
+  const handleLogout = (req, res, next) => {
+    axios
+      .get("http://localhost:8080/logout", {
+        withCredentials: true,
+      })
+      .then(() => {
+        setLoggedIn("");
+        history.push("/");
+      });
+  };
+  return loggedIn ? (
     <Box
       style={{
         display: "flex",
@@ -73,5 +86,7 @@ export default function Dashboard() {
       </Button>
       {/* </Stack> */}
     </Box>
+  ) : (
+    <div>Not Authorized</div>
   );
 }
