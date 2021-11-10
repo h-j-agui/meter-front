@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Container, Typography, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
@@ -46,12 +47,12 @@ const columns = [
 
 const ViewMeters = () => {
   const [readings, setReadings] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     axios
       .get("/getMeterData")
       .then((data) => {
-        console.log("this is here", data.data);
         setReadings(data.data);
       })
 
@@ -83,7 +84,9 @@ const ViewMeters = () => {
         variant="text"
         size="medium"
         sx={{ margin: "10px auto" }}
-        href="/admin/adminDash"
+        onClick={() => {
+          history.push("/admin/adminDash");
+        }}
       >
         Back to Dashboard
       </Button>

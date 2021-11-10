@@ -67,7 +67,6 @@ const Consumptions = () => {
       </Typography>
 
       {consumptions.map((consumption) => {
-        // console.log(employee);
         return (
           <Card key={Math.random()} elevation={2}>
             <Box>

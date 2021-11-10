@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import Moment from "moment";
 import {
   Container,
@@ -18,6 +19,7 @@ import { visuallyHidden } from "@mui/utils";
 
 export default function ViewEmployees() {
   const [employees, setEmployees] = useState([]);
+  const history = useHistory();
 
   const getEmployees = () => {
     axios
@@ -96,7 +98,9 @@ export default function ViewEmployees() {
           variant="text"
           size="medium"
           sx={{ margin: "10px auto" }}
-          href="/admin/adminDash"
+          onClick={() => {
+            history.push("/admin/adminDash");
+          }}
         >
           Back to Dashboard
         </Button>

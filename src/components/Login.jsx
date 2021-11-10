@@ -47,6 +47,7 @@ export default function SignIn() {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
@@ -57,9 +58,10 @@ export default function SignIn() {
       .then((user) => {
         console.log(user);
         if (!user) {
-          setLoggedIn(null);
+          // setLoggedIn(null);
           Redirect("/admin");
         } else {
+          console.log("submit button login screan", user.data);
           setLoggedIn(user.data);
           // Redirect("/admin");
         }

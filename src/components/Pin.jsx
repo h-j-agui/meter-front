@@ -130,9 +130,6 @@ export default function SignIn() {
 
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
-                  Home
-                </Link>
                 <Button onClick={handleCheck}>checkauth</Button>
               </Grid>
               <Grid item>

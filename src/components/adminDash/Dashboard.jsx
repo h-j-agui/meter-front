@@ -10,8 +10,7 @@ export default function Dashboard() {
   const { loggedIn, setLoggedIn } = useContext(LoginContext);
   const history = useHistory();
 
-  console.log("loggedin inside admindash is", loggedIn);
-  const handleLogout = (req, res, next) => {
+  const handleLogout = (req, res) => {
     axios
       .get("http://localhost:8080/logout", {
         withCredentials: true,
@@ -35,7 +34,9 @@ export default function Dashboard() {
         size="medium"
         sx={{ width: "25%", margin: "15px auto 0" }}
         color="secondary"
-        href="/addEmployee"
+        onClick={() => {
+          history.push("/addEmployee");
+        }}
       >
         Add Employee
       </Button>
@@ -45,7 +46,9 @@ export default function Dashboard() {
         variant="contained"
         size="medium"
         sx={{ width: "25%", margin: "15px auto" }}
-        href="/addAdministrator"
+        onClick={() => {
+          history.push("/addAdministrator");
+        }}
       >
         Add Administrator
       </Button>
@@ -53,7 +56,9 @@ export default function Dashboard() {
         variant="contained"
         size="medium"
         sx={{ width: "25%", margin: "0 auto 15px" }}
-        href="/addLocation"
+        onClick={() => {
+          history.push("/addLocation");
+        }}
       >
         Add Meter Location
       </Button>
@@ -63,7 +68,9 @@ export default function Dashboard() {
         size="medium"
         sx={{ width: "25%", margin: "0 auto 15px" }}
         color="error"
-        href="/viewMeters"
+        onClick={() => {
+          history.push("/viewMeters");
+        }}
       >
         View Meter Data
       </Button>
@@ -72,7 +79,9 @@ export default function Dashboard() {
         variant="contained"
         size="medium"
         sx={{ width: "25%", margin: "0 auto 15px" }}
-        href="/viewEmployees"
+        onClick={() => {
+          history.push("/viewEmployees");
+        }}
       >
         View Employees
       </Button>
@@ -83,6 +92,16 @@ export default function Dashboard() {
         onClick={handleLogout}
       >
         Logout
+      </Button>
+      <Button
+        variant="text"
+        size="medium"
+        sx={{ width: "25%", margin: "auto" }}
+        onClick={() => {
+          console.log(loggedIn);
+        }}
+      >
+        check Logged In
       </Button>
       {/* </Stack> */}
     </Box>

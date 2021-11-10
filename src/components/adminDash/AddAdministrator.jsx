@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormControl, TextField, Button, Typography } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import cleanName from "../../utils/fnCleanNames";
 
 const Administrator = () => {
   const [name, setName] = useState("");
   const [pass, setPass] = useState("");
+  const history = useHistory();
 
   const cleanStates = () => {
     setName("");
@@ -26,13 +27,13 @@ const Administrator = () => {
     console.log("starting axios post...");
     axios
       .post("http://localhost:8080/admin/addAdmin", {
-        username: cleanName(name),
+        username: cleanName,
         password: pass,
       })
-      .then((res) => {
-        console.log("success", res);
-        console.log("name", name, "password", pass);
-      })
+      // .then((res) => {
+      // console.log("success", res);
+      // console.log("name", name, "password", pass);
+      // })
       .catch((err) => {
         console.log(err);
       });
@@ -84,7 +85,10 @@ const Administrator = () => {
         variant="text"
         size="medium"
         sx={{ margin: "10px auto" }}
-        href="/admin/adminDash"
+        // href="/admin/adminDash"
+        onClick={() => {
+          history.push("/admin/adminDash");
+        }}
       >
         Back to Dashboard
       </Button>

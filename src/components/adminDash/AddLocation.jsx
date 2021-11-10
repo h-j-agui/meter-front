@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { FormControl, TextField, Button, Container, Box } from "@mui/material";
 
 const Location = () => {
   const [location, setLocation] = useState("");
-
+  const history = useHistory();
   const cleanStates = () => {
     setLocation("");
   };
@@ -53,7 +53,9 @@ const Location = () => {
           variant="text"
           size="medium"
           sx={{ margin: "10px auto" }}
-          href="/admin/adminDash"
+          onClick={() => {
+            history.push("/admin/adminDash");
+          }}
         >
           Back to Dashboard
         </Button>

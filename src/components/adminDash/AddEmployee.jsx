@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import {
   FormControl,
@@ -7,6 +8,7 @@ import {
   Typography,
   Container,
 } from "@mui/material";
+import { LoginContext } from "../../utils/Context";
 
 import { useState } from "react";
 import cleanName from "../../utils/fnCleanNames";
@@ -14,6 +16,8 @@ import cleanName from "../../utils/fnCleanNames";
 const AddEmployee = () => {
   const [name, setName] = useState("");
   const [pin, setPin] = useState("");
+  const { loggedIn, setLoggedIn } = useContext(LoginContext);
+  const history = useHistory();
 
   const cleanStates = () => {
     setName("");
@@ -33,12 +37,12 @@ const AddEmployee = () => {
     console.log("starting axios post...");
     axios
       .post("/admin/addUser", {
-        username: cleanName(name),
+        username: cleanName,
         password: pin,
       })
       .then((res) => {
         console.log("success", res);
-        console.log("name", name, "pin", pin);
+        // console.log("name", name, "pin", pin);
       })
       .catch((err) => {
         console.log(err);
@@ -46,6 +50,10 @@ const AddEmployee = () => {
 
     cleanStates();
   };
+
+  // setTimeout(() => {
+  //   console.log("timeout 5 seconds", loggedIn);
+  // }, 5000);
 
   return (
     <Container>
@@ -94,7 +102,9 @@ const AddEmployee = () => {
           variant="text"
           size="medium"
           sx={{ margin: "10px auto" }}
-          href="/viewEmployees"
+          onClick={() => {
+            history.push("/viewEmployees");
+          }}
         >
           View Employees
         </Button>
@@ -103,7 +113,9 @@ const AddEmployee = () => {
           variant="text"
           size="medium"
           sx={{ margin: "10px auto" }}
-          href="/admin/adminDash"
+          onClick={() => {
+            history.push("/admin/adminDash");
+          }}
         >
           Back to Dashboard
         </Button>
