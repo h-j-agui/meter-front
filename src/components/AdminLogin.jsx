@@ -136,9 +136,13 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="/" variant="body2">
+                <Button
+                  onClick={() => {
+                    history.push("/");
+                  }}
+                >
                   Home
-                </Link>
+                </Button>
               </Grid>
             </Grid>
           </Box>

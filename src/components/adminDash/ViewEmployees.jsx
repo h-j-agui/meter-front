@@ -87,7 +87,13 @@ export default function ViewEmployees() {
                   >
                     Delete
                   </Button>
-                  <FormDialog employee={employee} getEmployees={getEmployees} />
+                  <Button
+                    variant="outlined"
+                    employee={employee}
+                    getEmployees={getEmployees}
+                  >
+                    Edit Employee
+                  </Button>
                 </CardActions>
               </Box>
             </Card>

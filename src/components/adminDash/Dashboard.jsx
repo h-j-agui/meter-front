@@ -93,16 +93,7 @@ export default function Dashboard() {
       >
         Logout
       </Button>
-      <Button
-        variant="text"
-        size="medium"
-        sx={{ width: "25%", margin: "auto" }}
-        onClick={() => {
-          console.log(loggedIn);
-        }}
-      >
-        check Logged In
-      </Button>
+
       {/* </Stack> */}
     </Box>
   );

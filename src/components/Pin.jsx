@@ -98,7 +98,7 @@ export default function SignIn() {
           </Avatar>
 
           <Typography component="h1" variant="h5">
-            Pin
+            Pin Number
           </Typography>
           <Box
             component="form"
@@ -130,12 +130,13 @@ export default function SignIn() {
 
             <Grid container>
               <Grid item xs>
-                <Button onClick={handleCheck}>checkauth</Button>
-              </Grid>
-              <Grid item>
-                <Link href="/admin" variant="body2">
-                  {"Administrator Login"}
-                </Link>
+                <Button
+                  onClick={() => {
+                    history.push("/admin");
+                  }}
+                >
+                  Administrator Login
+                </Button>
               </Grid>
             </Grid>
           </Box>
