@@ -23,7 +23,7 @@ export default function ViewEmployees() {
 
   const getEmployees = () => {
     axios
-      .get("http://localhost:8080/getEmployees")
+      .get("http://localhost:8080/getUser")
       .then((data) => {
         setEmployees(data.data);
       })
@@ -39,7 +39,7 @@ export default function ViewEmployees() {
 
   const handleDelete = (id) => {
     axios
-      .delete("http://localhost:8080/admin/deleteEmployee/" + id)
+      .delete("http://localhost:8080/deleteUser/" + id)
       .then((res) => {
         console.log(res);
       })
@@ -63,7 +63,7 @@ export default function ViewEmployees() {
         >
           Your Employees
         </Typography>
-        <IconButton sx={{ visuallyHidden }} href="/addEmployee">
+        <IconButton sx={{ visuallyHidden }} href="/addUser">
           <Icon color="secondary">add_circle</Icon>
         </IconButton>
 

@@ -51,24 +51,24 @@ export default function SignIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("/adminLogin", {
-        username: username,
-        password: password,
-      })
+      .post(
+        "/adminLogin",
+        {
+          username: username,
+          password: password,
+        },
+        { withCredentials: true }
+      )
       .then((user) => {
-        console.log(user);
-        if (!user) {
-          // setLoggedIn(null);
-          Redirect("/admin");
-        } else {
-          console.log("submit button login screan", user.data);
+        console.log("test", loggedIn);
+        if (user) {
           setLoggedIn(user.data);
-          // Redirect("/admin");
+          history.push("/admin/adminDash");
+        } else {
+          history.push("/");
         }
       })
-      .then(() => {
-        history.push("/admin/adminDash");
-      })
+
       .catch((err) => console.log(err));
   };
 

@@ -4,7 +4,7 @@ import "./App.css";
 import PrivateRoute from "./components/ProtectedRoute";
 import MeterForm from "./components/MeterForm";
 import Pin from "./components/Pin";
-import Login from "./components/Login";
+import Login from "./components/AdminLogin";
 import Dashboard from "./components/adminDash/Dashboard";
 import AddEmployee from "./components/adminDash/AddEmployee";
 import Location from "./components/adminDash/AddLocation";
@@ -18,11 +18,10 @@ import axios from "axios";
 function App() {
   const [loggedIn, setLoggedIn] = useState(null);
   useEffect(() => {
-    // console.log("use effect ran");
     axios
       .get("/checkAuth")
       .then((data) => {
-        // console.log(data);
+        console.log("useEffect de App.js", data.data);
         setLoggedIn(data.data);
       })
       // .then(() => console.log("2", loggedIn))
@@ -44,7 +43,7 @@ function App() {
 
           <PrivateRoute path="/admin/adminDash" component={Dashboard} />
 
-          <Route exact path="/addEmployee" component={AddEmployee} />
+          <PrivateRoute exact path="/addEmployee" component={AddEmployee} />
           {/* view of all employees */}
           <PrivateRoute exact path="/viewEmployees" component={ViewEmployees} />
           {/* view meter readings */}

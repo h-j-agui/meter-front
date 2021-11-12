@@ -35,14 +35,15 @@ const AddEmployee = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("starting axios post...");
+
     axios
-      .post("/admin/addUser", {
-        username: cleanName,
+      .post("/addUser", {
+        username: cleanName(name),
         password: pin,
+        role: 2,
       })
-      .then((res) => {
-        console.log("success", res);
-        // console.log("name", name, "pin", pin);
+      .then((response) => {
+        console.log(response);
       })
       .catch((err) => {
         console.log(err);

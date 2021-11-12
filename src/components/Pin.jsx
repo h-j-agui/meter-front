@@ -74,7 +74,7 @@ export default function SignIn() {
       .catch((err) => console.log(err));
   };
 
-  return (
+  return !loggedIn ? (
     <ThemeProvider theme={theme}>
       <Container
         component="main"
@@ -143,5 +143,7 @@ export default function SignIn() {
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
+  ) : (
+    <>Redirecting...{history.push("/meter")}</>
   );
 }

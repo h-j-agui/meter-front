@@ -114,7 +114,7 @@ const MeterForm = () => {
           meter_id: meter,
           reading: number,
           notes: note,
-          employee_id: loggedIn.id,
+          user_id: loggedIn.id,
         })
         .then((res) => {
           console.log("success", res);
@@ -132,7 +132,7 @@ const MeterForm = () => {
         withCredentials: true,
       })
       .then(() => {
-        setLoggedIn("");
+        setLoggedIn(null);
         history.push("/");
       });
   };

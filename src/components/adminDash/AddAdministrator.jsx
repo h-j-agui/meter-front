@@ -26,9 +26,10 @@ const Administrator = () => {
     e.preventDefault();
     console.log("starting axios post...");
     axios
-      .post("http://localhost:8080/admin/addAdmin", {
-        username: cleanName,
+      .post("http://localhost:8080/addUser", {
+        username: cleanName(name),
         password: pass,
+        role: 1,
       })
       // .then((res) => {
       // console.log("success", res);

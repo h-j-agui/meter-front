@@ -40,7 +40,7 @@ const columns = [
     headerName: "User Name",
     width: 150,
     valueGetter: (params) => {
-      return params.row.employee.username;
+      return params.row.user.username;
     },
   },
 ];
@@ -53,6 +53,7 @@ const ViewMeters = () => {
     axios
       .get("/getMeterData")
       .then((data) => {
+        console.log(data);
         setReadings(data.data);
       })
 

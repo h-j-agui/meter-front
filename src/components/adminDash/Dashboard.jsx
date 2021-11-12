@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { LoginContext } from "../../utils/Context";
 // import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -16,11 +16,11 @@ export default function Dashboard() {
         withCredentials: true,
       })
       .then(() => {
-        setLoggedIn("");
+        setLoggedIn(null);
         history.push("/");
       });
   };
-  return loggedIn ? (
+  return (
     <Box
       style={{
         display: "flex",
@@ -105,7 +105,5 @@ export default function Dashboard() {
       </Button>
       {/* </Stack> */}
     </Box>
-  ) : (
-    <div>Not Authorized</div>
   );
 }
