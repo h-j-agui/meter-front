@@ -23,6 +23,7 @@ export default function Dashboard() {
   return (
     <Box
       style={{
+        marginTop: "4rem",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -32,7 +33,7 @@ export default function Dashboard() {
       <Button
         variant="contained"
         size="medium"
-        sx={{ width: "25%", margin: "15px auto 0" }}
+        sx={{ width: "10rem", margin: "15px auto 0" }}
         color="secondary"
         onClick={() => {
           history.push("/addEmployee");
@@ -45,7 +46,7 @@ export default function Dashboard() {
         color="success"
         variant="contained"
         size="medium"
-        sx={{ width: "25%", margin: "15px auto" }}
+        sx={{ width: "10rem", margin: "15px auto" }}
         onClick={() => {
           history.push("/addAdministrator");
         }}
@@ -55,7 +56,7 @@ export default function Dashboard() {
       <Button
         variant="contained"
         size="medium"
-        sx={{ width: "25%", margin: "0 auto 15px" }}
+        sx={{ width: "10rem", margin: "0 auto 15px" }}
         onClick={() => {
           history.push("/addLocation");
         }}
@@ -66,7 +67,7 @@ export default function Dashboard() {
       <Button
         variant="contained"
         size="medium"
-        sx={{ width: "25%", margin: "0 auto 15px" }}
+        sx={{ width: "10rem", margin: "0 auto 15px" }}
         color="error"
         onClick={() => {
           history.push("/viewMeters");
@@ -78,7 +79,7 @@ export default function Dashboard() {
         color="secondary"
         variant="contained"
         size="medium"
-        sx={{ width: "25%", margin: "0 auto 15px" }}
+        sx={{ width: "10rem", margin: "0 auto 15px" }}
         onClick={() => {
           history.push("/viewEmployees");
         }}
@@ -88,7 +89,7 @@ export default function Dashboard() {
       <Button
         variant="text"
         size="medium"
-        sx={{ width: "25%", margin: "auto" }}
+        sx={{ width: "10rem", margin: "auto" }}
         onClick={handleLogout}
       >
         Logout

@@ -80,6 +80,7 @@ export default function SignIn() {
         component="main"
         maxWidth="xs"
         sx={{
+          marginTop: "5%",
           color: "primary.main",
           border: { xs: "none", sm: "none", md: 1, lg: 1 },
         }}

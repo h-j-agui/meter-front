@@ -70,12 +70,12 @@ const ViewMeters = () => {
       >
         Meter Reading List
       </Typography>
-      <div style={{ height: 400, width: "100%" }}>
+      <div style={{ height: 700, width: "100%" }}>
         <DataGrid
           rows={readings}
           columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
           checkboxSelection
           disableSelectionOnClick
         />
